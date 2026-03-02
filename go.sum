@@ -1,0 +1,6 @@
+github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/saenuma/flaarumlib v0.0.0-20260121201823-8bb9a7189e13 h1:KOTX5e4Psy0/SLAaEENLr1q1wusqPaa6X3qX/TMdu+k=
+github.com/saenuma/flaarumlib v0.0.0-20260121201823-8bb9a7189e13/go.mod h1:M7iUcW3HujhMko4bdiCIvO0im5m4G2bu/byQgURHhB0=
+golang.org/x/crypto v0.48.0 h1:/VRzVqiRSggnhY7gNRxPauEQ5Drw9haKdM0jqfcCFts=
+golang.org/x/crypto v0.48.0/go.mod h1:r0kV5h3qnFPlQnBSrULhlsRfryS2pmewsg+XfMgkVos=

@@ -1,0 +1,58 @@
+{{define "title"}} NASC Seed Companies Website {{end}}
+
+{{define "styles"}}
+<style>
+  #container {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 100%;
+    gap: 20px;
+  }
+
+  form div {
+    margin-bottom: 10px;
+    ;
+  }
+  input {
+    width: 90%;
+    padding: 5px;
+  }
+  form {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 20px;
+  }
+</style>
+{{end}}
+
+{{define "main"}}
+<div id="container">
+  <div id="message">
+    <h2>NASC Seed Companies Website</h2>
+    <img src="/static/img/agricultural-seeds.jpg" alt="seeds" />
+    <h3>What Can I achieve here?</h3>
+    <ol>
+      <li>Register With NASC As a Seed Dealer</li>
+
+    </ol>
+  </div>
+  <div id="forms">
+    <h3>Login Form</h3>
+    <form method="post" action="/login">
+      <div>
+        <div>
+          <label for='id_email'>Email Address</label>
+        </div>
+        <input type='email' name='email' id='id_email'  required/>
+      </div>
+      <div>
+        <div><label for='id_password'>Secret Password</label></div>
+        <input type='password' name='password' id='id_password'  required/>
+      </div>
+      <div>
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+{{end}}

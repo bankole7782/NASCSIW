@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content='{{block "meta" .}}{{end}}'>
+  <meta name="keywords" content='{{block "keywords" .}}{{end}}'>
+  <title>{{block "title" .}} NASC Seed Companies Website {{end}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shorcut icon" type="image/png" href="/static/img/nnasc.png" />
+  <style>
+    body {
+      width: 960px;
+      margin: 10px auto;
+      font-family: arial, sans-serif;
+    }
+    #header {
+      display: grid;
+      grid-template-columns: 25% 50% 25%;
+      grid-template-rows: 100%;
+      gap: 20px;
+      width: fit-content;
+    }
+    #header img {
+      width: 80px;
+    }
+    #header a {
+      margin-top: 0px;
+      font-size: 1.2em;
+      display: block;
+
+    }
+    #wsname a {
+      text-decoration: none;
+      font-size: 1.5em;
+      margin-top: 0px;
+      display: block;
+    }
+    #footer {
+      width: fit-content;
+      margin: 0 auto;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      clear: both;
+    }
+  </style>
+  {{block "styles" .}} {{end}}
+  
+</head>
+<body>
+  <div id="header">
+    <div id="logo-div">
+      <img src="/static/img/nnasc.png" alt="logo" >
+    </div>
+    <div id="wsname">
+      <a href="/">NASC Seed Companies Website</a>
+    </div>
+    <div>
+      <!-- <a href="/register">Register</a> -->
+    </div>
+  </div>
+  <div style="clear: both; margin-bottom: 2px"></div>
+  {{block "main" .}} {{end}}
+
+  <div id="footer">
+    &copy; National Agricultural Seeds Council (NASC) 2026
+  </div>
+
+  {{block "scripts" .}} {{end}}
+
+</body>
+</html>
