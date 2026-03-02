@@ -1,0 +1,35 @@
+{{define "title"}} View Company Code {{.CompanyName}} Page {{end}}
+
+{{define "styles"}}
+<style>
+  form div {
+    margin-bottom: 10px;
+    ;
+  }
+  input {
+    width: 100%;
+    padding: 5px;
+  }
+  input[type=checkbox] {
+    width: auto;
+  }
+  form {
+    width: 400px;
+    padding: 20px;
+  }
+</style>
+{{end}}
+
+{{define "main"}}
+<div id="container">
+  <h2>View Company Code {{.CompanyName}} Page</h2>
+
+  <div>
+    <p>Name: <b>{{.name}}</b></p>
+    <p>CAC Number : <b>{{.cacno}}</b></p>
+    <p>Access Code: <b>{{.access_code}}</b></p>
+  </div>
+</div>
+{{end}}
+
+

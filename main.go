@@ -30,6 +30,10 @@ func main() {
 	http.HandleFunc("/login", signinHandler)
 	http.HandleFunc("/logout", signout)
 
+	// api
+	http.HandleFunc("/regcoy", registerCompanyHandler)
+	http.HandleFunc("/scoya/{id}/", seedCompanyAccessHandler)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8085"

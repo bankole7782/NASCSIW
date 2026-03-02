@@ -1,0 +1,63 @@
+{{define "title"}} Seed Company Registration Page {{end}}
+
+{{define "styles"}}
+<style>
+  form div {
+    margin-bottom: 10px;
+    ;
+  }
+  input {
+    width: 100%;
+    padding: 5px;
+  }
+  input[type=checkbox] {
+    width: auto;
+  }
+  form {
+    width: 400px;
+    padding: 20px;
+  }
+</style>
+{{end}}
+
+{{define "main"}}
+<div id="container">
+  <div id="message">
+    <h2>Seed Company Registration</h2>
+    <p>
+      Register a company to get an access code.
+    </p>
+  </div>
+  <div id="forms">
+    <form method="post" action="">
+      <div>
+        <div><label>Company Name</label></div>
+        <input type='text' name='company_name'  required/>
+      </div>
+      <div>
+        <div><label>CAC Number</label></div>
+        <input type="text" name="cacno" required />
+      </div>
+      <div>
+        <button type="submit">Register</button>
+      </div>
+    
+     </form>
+  </div>
+</div>
+
+{{end}}
+
+
+{{define "scripts"}}
+<script>
+function myFunction() {
+  var x = document.getElementById("id_pw1");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+{{end}}

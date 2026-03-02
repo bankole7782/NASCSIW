@@ -33,6 +33,15 @@ foreign_keys:
     user_id users on_delete_delete
 ::
 	`
+
+	SeedCompanysStmt = `
+table: seed_companies
+fields:
+	name string required
+	cacno string required
+	access_code string required
+::
+	`
 )
 
 func getFlaarumClient() flaarumlib.Client {
@@ -49,7 +58,7 @@ func getFlaarumClient() flaarumlib.Client {
 		panic(err)
 	}
 
-	stmts := []string{UsersFlaarumStmt, SessionsStmt}
+	stmts := []string{UsersFlaarumStmt, SessionsStmt, SeedCompanysStmt}
 	for _, stmt := range stmts {
 		err = cl.CreateOrUpdateTable(stmt)
 		if err != nil {

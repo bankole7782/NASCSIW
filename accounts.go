@@ -157,7 +157,6 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 			"email": r.FormValue("email"), "firstname": r.FormValue("firstname"),
 			"surname": r.FormValue("surname"), "password": string(hashedPassword),
 			"regdate": time.Now().Format("2006-01-02"), "role": r.FormValue("role"),
-			"organisation": r.FormValue("organisation"),
 		}
 
 		flcl := getFlaarumClient()
