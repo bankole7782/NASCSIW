@@ -7,6 +7,10 @@ import (
 	"text/template"
 )
 
+const (
+	REG_CODE = "mEmE8m91UDvv5Vk24AKWOa9LUxSrpznLsjX5pQI"
+)
+
 func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./statics"))))
@@ -22,7 +26,7 @@ func main() {
 	})
 
 	// accounts
-	// http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/reg/{code}", registerHandler)
 	http.HandleFunc("/login", signinHandler)
 	http.HandleFunc("/logout", signout)
 

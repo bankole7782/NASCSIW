@@ -18,6 +18,7 @@ fields:
 	role string required
 	regdate string required
 	password string required
+	organisation string
 ::
 `
 
@@ -25,7 +26,7 @@ fields:
 table: sessions
 fields:
 	session_code string required
-	creation_dt string required
+	creation_dt datetime required
 	user_id int required
 ::
 foreign_keys:
@@ -38,7 +39,7 @@ func getFlaarumClient() flaarumlib.Client {
 
 	var cl flaarumlib.Client
 	if os.Getenv("SAE_DEV") == "true" {
-		cl = flaarumlib.NewClient("nscw")
+		cl = flaarumlib.NewClient("nascsiw")
 	} else {
 		cl = flaarumlib.NewClient("first_proj")
 	}

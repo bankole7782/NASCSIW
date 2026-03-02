@@ -1,0 +1,89 @@
+{{define "title"}} Seed Company Registration Page {{end}}
+
+{{define "styles"}}
+<style>
+  form div {
+    margin-bottom: 10px;
+    ;
+  }
+  input {
+    width: 100%;
+    padding: 5px;
+  }
+  input[type=checkbox] {
+    width: auto;
+  }
+  form {
+    width: 400px;
+    padding: 20px;
+  }
+</style>
+{{end}}
+
+{{define "main"}}
+<div id="container">
+  <div id="message">
+    <h2>Basic Registration</h2>
+    <p>
+      Begin Your Journey with this Basic registration Page.
+    </p>
+  </div>
+  <div id="forms">
+    <form method="post" action="">
+      <div>
+        <div><label for='id_email'>Email Address</label></div>
+        <input type='email' name='email' id='id_email'  required/>
+      </div>
+      <div>
+        <div><label for='id_firstname'>First Name</label></div>
+        <input type='text' name='firstname' id='id_firstname'  required/>
+      </div>
+      <div>
+        <div><label for='id_surname'>Last Name</label></div>
+        <input type='text' name='surname' id='id_surname'  required/>
+      </div>
+      <div>
+        <div><label for='id_pw1'>Password</label></div>
+        <input type='password' name='pw1' id='id_pw1'  required/>
+      </div>
+      <div>
+        <input type="checkbox" onclick="myFunction()">Show Password
+      </div>
+
+      <h3>Company Details</h3>
+      <div>
+        <div><label for='id_organisation'>Organisation</label></div>
+        <input type="text" name="organisation" />
+      </div>
+      <div>
+        <div><label>Role</label></div>
+        <select name="role">
+          <option>seedcoy</option>
+          <option>officer</option>
+          <option>viewer</option>
+          <option>admin</option>
+        </select>
+      </div>
+      <div>
+        <button type="submit">Register</button>
+      </div>
+    
+     </form>
+  </div>
+</div>
+
+{{end}}
+
+
+{{define "scripts"}}
+<script>
+function myFunction() {
+  var x = document.getElementById("id_pw1");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+{{end}}

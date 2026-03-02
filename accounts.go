@@ -131,43 +131,49 @@ func signout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 }
 
-// func registerHandler(w http.ResponseWriter, r *http.Request) {
-// 	userId, _, _ := getCurrentUserData(r)
-// 	if userId > 0 {
-// 		http.Redirect(w, r, "/inside", http.StatusTemporaryRedirect)
-// 	}
+func registerHandler(w http.ResponseWriter, r *http.Request) {
+	trialCode := r.PathValue("code")
+	if trialCode != REG_CODE {
+		errorPage(w, fmt.Errorf("Invalid code '%s' supplied.", trialCode))
+		return
+	}
+	userId, _, _ := getCurrentUserData(r)
+	if userId > 0 {
+		http.Redirect(w, r, "/inside", http.StatusTemporaryRedirect)
+	}
 
-// 	if r.Method != http.MethodPost {
-// 		tmpl := template.Must(template.ParseFiles("templates/base.html", "templates/register.html"))
-// 		tmpl.Execute(w, nil)
-// 	} else {
+	if r.Method != http.MethodPost {
+		tmpl := template.Must(template.ParseFiles("templates/base.html", "templates/register.html"))
+		tmpl.Execute(w, nil)
+	} else {
 
-// 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(r.FormValue("pw1")), bcrypt.DefaultCost)
-// 		if err != nil {
-// 			errorPage(w, err)
-// 			return
-// 		}
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(r.FormValue("pw1")), bcrypt.DefaultCost)
+		if err != nil {
+			errorPage(w, err)
+			return
+		}
 
-// 		toWrite := map[string]string{
-// 			"email": r.FormValue("email"), "firstname": r.FormValue("firstname"),
-// 			"surname": r.FormValue("surname"), "password": string(hashedPassword),
-// 			"regdate": time.Now().Format("2006-01-02"), "role": "seedcoy",
-// 		}
+		toWrite := map[string]string{
+			"email": r.FormValue("email"), "firstname": r.FormValue("firstname"),
+			"surname": r.FormValue("surname"), "password": string(hashedPassword),
+			"regdate": time.Now().Format("2006-01-02"), "role": r.FormValue("role"),
+			"organisation": r.FormValue("organisation"),
+		}
 
-// 		flcl := getFlaarumClient()
+		flcl := getFlaarumClient()
 
-// 		_, err = flcl.InsertRowStr("users", toWrite)
-// 		if err != nil {
-// 			errorPage(w, err)
-// 			return
-// 		}
+		_, err = flcl.InsertRowStr("users", toWrite)
+		if err != nil {
+			errorPage(w, err)
+			return
+		}
 
-// 		messageUser(w, r, "Succesful Registration", `You have sucessfully registered.
-// Go to your inbox to click mail confirmation
-// 		`)
+		messageUser(w, r, "Succesful Registration", `You have sucessfully registered.
+Go to your inbox to click mail confirmation
+		`)
 
-// 	}
-// }
+	}
+}
 
 func getUserFullName(userId int64) (string, error) {
 	flcl := getFlaarumClient()
