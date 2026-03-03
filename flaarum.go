@@ -18,7 +18,6 @@ fields:
 	role string required
 	regdate string required
 	password string required
-	organisation string
 ::
 `
 
@@ -40,6 +39,35 @@ fields:
 	name string required
 	cacno string required
 	access_code string required
+::
+	`
+
+	ProductionPlansStmt = `
+table: production_plans
+fields:
+	company_id int required
+	state string required
+	address string required
+	mobileNumber string required
+	plantingArea string required
+	latitude string required
+	longitude string required
+	crop string required
+	seedClass string required
+	variety string required
+	productionYear int required
+	plantingDate date required
+	srcProductionYear int required
+	srcQuantityProcured int required
+	srcSeedCodexNumber string required
+	srcSeedClass string required
+	srcSupplierName string required
+	receipt_photo text
+	field_photo_1 text
+	field_photo_2 text
+::	
+foreign_keys:
+  company_id seed_companies on_delete_delete
 ::
 	`
 )

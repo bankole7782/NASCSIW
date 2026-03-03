@@ -6,6 +6,7 @@ import (
 	"math/rand/v2"
 	"net/http"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 )
@@ -63,4 +64,14 @@ func untestedRandomString(length int) string {
 		b[i] = charset[rand.IntN(len(charset))]
 	}
 	return string(b)
+}
+
+func getPhotosStorePath() string {
+	if os.Getenv("SAE_DEV") == "true" {
+		homeDir, _ := os.UserHomeDir()
+		retPath := filepath.Join(homeDir, "op_nascsiw")
+		return retPath
+	} else {
+		return "/opt/app/photos"
+	}
 }

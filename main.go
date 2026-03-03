@@ -7,10 +7,6 @@ import (
 	"text/template"
 )
 
-const (
-	REG_CODE = "mEmE8m91UDvv5Vk24AKWOa9LUxSrpznLsjX5pQI"
-)
-
 func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./statics"))))
@@ -29,10 +25,13 @@ func main() {
 	http.HandleFunc("/reg/{code}", registerHandler)
 	http.HandleFunc("/login", signinHandler)
 	http.HandleFunc("/logout", signout)
-
-	// api
 	http.HandleFunc("/regcoy", registerCompanyHandler)
 	http.HandleFunc("/scoya/{id}/", seedCompanyAccessHandler)
+
+	// API
+	http.HandleFunc("/verify_accesscode/{code}", verifyAccessCode)
+	http.HandleFunc("/submit_pplan/{code}", submitProductionPlan)
+	http.HandleFunc("/submit_photo", submitPhoto)
 
 	port := os.Getenv("PORT")
 	if port == "" {
