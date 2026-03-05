@@ -121,6 +121,7 @@ func submitProductionPlan(w http.ResponseWriter, r *http.Request) {
 
 	_ = aRow
 	toInsert := make(map[string]string)
+	r.FormValue("email")
 	for field := range r.PostForm {
 		if field == "access_code" {
 			continue

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/saenuma/flaarumlib"
@@ -13,7 +14,7 @@ table: users
 fields:
   firstname string required
 	surname string required
-	email string required
+	email string required unique
 	confirmed string
 	role string required
 	regdate string required
@@ -24,7 +25,7 @@ fields:
 	SessionsStmt = `
 table: sessions
 fields:
-	session_code string required
+	session_code string required unique
 	creation_dt datetime required
 	user_id int required
 ::
@@ -36,15 +37,17 @@ foreign_keys:
 	SeedCompanysStmt = `
 table: seed_companies
 fields:
-	name string required
-	cacno string required
-	access_code string required
+	name string required unique
+	cacno string required unique
+	access_code string required unique
 ::
 	`
 
 	ProductionPlansStmt = `
 table: production_plans
 fields:
+	username string required
+	date date required
 	company_id int required
 	state string required
 	address string required
@@ -86,12 +89,29 @@ func getFlaarumClient() flaarumlib.Client {
 		panic(err)
 	}
 
-	stmts := []string{UsersFlaarumStmt, SessionsStmt, SeedCompanysStmt}
+	stmts := []string{UsersFlaarumStmt, SessionsStmt, SeedCompanysStmt, ProductionPlansStmt}
 	for _, stmt := range stmts {
 		err = cl.CreateOrUpdateTable(stmt)
 		if err != nil {
 			panic(err)
 		}
+	}
+
+	// load data
+	accessCode := "cp"
+	_, err = cl.SearchForOne(fmt.Sprintf(`
+		table: seed_companies
+		where:
+		  access_code = %s
+		`, accessCode))
+	if err != nil {
+		toWrite := map[string]string{
+			"name":        "Test1",
+			"cacno":       "RC001",
+			"access_code": accessCode,
+		}
+
+		cl.InsertRowStr("seed_companies", toWrite)
 	}
 
 	return cl

@@ -10,7 +10,7 @@ func createCompanyAccessCode() string {
 	flcl := getFlaarumClient()
 
 	for {
-		rs := "c" + untestedRandomString(25)
+		rs := "c" + untestedRandomString(15)
 		count, err := flcl.CountRows(fmt.Sprintf(`
 			table: seed_companies
 			where:

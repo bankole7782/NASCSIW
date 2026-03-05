@@ -31,7 +31,7 @@ func main() {
 	// API
 	http.HandleFunc("/verify_accesscode/{code}", verifyAccessCode)
 	http.HandleFunc("/submit_pplan/{code}", submitProductionPlan)
-	http.HandleFunc("/submit_photo", submitPhoto)
+	http.HandleFunc("/submit_photo/{code}", submitPhoto)
 
 	port := os.Getenv("PORT")
 	if port == "" {

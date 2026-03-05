@@ -57,7 +57,7 @@ func randRange(min, max int) int {
 }
 
 func untestedRandomString(length int) string {
-	const charset = "abcdefghijklmnopqrstuvwxyz1234567890"
+	const charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 	b := make([]byte, length)
 	for i := range b {
