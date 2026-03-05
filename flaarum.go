@@ -59,7 +59,7 @@ fields:
 	plantingDate date required
 	srcProductionYear int required
 	srcQuantityProcured int required
-	srcSeedCodexNumber string required
+	srcSeedCodexNumber string
 	srcSeedClass string required
 	srcSupplierName string required
 	receipt_photo text

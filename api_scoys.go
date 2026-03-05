@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 
 func verifyAccessCode(w http.ResponseWriter, r *http.Request) {
 	flcl := getFlaarumClient()
+	w.Header().Set("Content-Type", "application/json")
 
 	accessCode := r.PathValue("code")
 	aRow, err := flcl.SearchForOne(fmt.Sprintf(`
@@ -20,12 +22,23 @@ func verifyAccessCode(w http.ResponseWriter, r *http.Request) {
 		`, accessCode))
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "error: true\nmsg: not_found\n", 400)
+
+		w.WriteHeader(http.StatusBadRequest)
+		data := map[string]string{"error": "true", "msg": "not_found"}
+		jsonStr, _ := json.Marshal(data)
+		w.Write(jsonStr)
+
 		return
 	}
 
-	fmt.Fprintf(w, "error: false\ncompany_name: %s\ncacno: %s\n", (*aRow)["name"].(string),
-		(*aRow)["cacno"].(string))
+	data := map[string]string{
+		"error":        "false",
+		"company_name": (*aRow)["name"].(string),
+		"cacno":        (*aRow)["cacno"].(string),
+	}
+	jsonStr, _ := json.Marshal(data)
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonStr)
 }
 
 func submitPhoto(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +52,11 @@ func submitPhoto(w http.ResponseWriter, r *http.Request) {
 		`, accessCode))
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "error: true\nmsg: not_found\n", 400)
+
+		w.WriteHeader(http.StatusBadRequest)
+		data := map[string]string{"error": "true", "msg": "not_found"}
+		jsonStr, _ := json.Marshal(data)
+		w.Write(jsonStr)
 		return
 	}
 
@@ -51,16 +68,24 @@ func submitPhoto(w http.ResponseWriter, r *http.Request) {
 
 	file, fileHeader, err := r.FormFile("file")
 	if err != nil {
-		http.Error(w, fmt.Sprintf("error: true\nmsg: %s\n", err), http.StatusBadRequest)
 		fmt.Println(err)
+
+		w.WriteHeader(http.StatusBadRequest)
+		data := map[string]string{"error": "true", "msg": err.Error()}
+		jsonStr, _ := json.Marshal(data)
+		w.Write(jsonStr)
 		return
 	}
 	defer file.Close()
 
 	rawFile, err := io.ReadAll(file)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("error: true\nmsg: %s\n", err), http.StatusBadRequest)
 		fmt.Println(err)
+
+		w.WriteHeader(http.StatusBadRequest)
+		data := map[string]string{"error": "true", "msg": err.Error()}
+		jsonStr, _ := json.Marshal(data)
+		w.Write(jsonStr)
 		return
 	}
 
@@ -68,7 +93,10 @@ func submitPhoto(w http.ResponseWriter, r *http.Request) {
 	inPath := filepath.Join(photoPath, fileName)
 	os.WriteFile(inPath, rawFile, 0777)
 
-	fmt.Fprintf(w, "error: false\nphoto_name: %s\n", fileName)
+	data := map[string]string{"error": "false", "photo_name": fileName}
+	jsonStr, _ := json.Marshal(data)
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonStr)
 }
 
 func submitProductionPlan(w http.ResponseWriter, r *http.Request) {
@@ -82,8 +110,13 @@ func submitProductionPlan(w http.ResponseWriter, r *http.Request) {
 		`, accessCode))
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w, "error: true\nmsg: not_found\n", 400)
+
+		w.WriteHeader(http.StatusBadRequest)
+		data := map[string]string{"error": "true", "msg": "not_found"}
+		jsonStr, _ := json.Marshal(data)
+		w.Write(jsonStr)
 		return
+
 	}
 
 	_ = aRow
@@ -100,10 +133,17 @@ func submitProductionPlan(w http.ResponseWriter, r *http.Request) {
 
 	retId, err := flcl.InsertRowStr("production_plans", toInsert)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("error: true\nmsg: %s\n", err), http.StatusBadRequest)
 		fmt.Println(err)
+
+		w.WriteHeader(http.StatusBadRequest)
+		data := map[string]string{"error": "true", "msg": err.Error()}
+		jsonStr, _ := json.Marshal(data)
+		w.Write(jsonStr)
 		return
 	}
 
-	fmt.Fprintf(w, "error: false\nfield_id: %d\n", retId)
+	data := map[string]string{"error": "false", "field_id": strconv.FormatInt(retId, 10)}
+	jsonStr, _ := json.Marshal(data)
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonStr)
 }
